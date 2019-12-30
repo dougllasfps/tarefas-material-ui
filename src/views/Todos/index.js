@@ -12,8 +12,9 @@ import {
     TextField,
     Button,
     Grid,
-    Paper
+    Paper,
 } from '@material-ui/core'
+
 
 const client = axios.create({
     baseURL: 'https://minhastarefas-api.herokuapp.com',
@@ -74,22 +75,23 @@ class Todos extends React.Component{
                 </Grid>
                 <Grid container className={useStyles.content}>
                     <Grid item  md={12}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Descrição</TableCell>
-                                    <TableCell>Categoria</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {this.state.todos.map(todo => (
-                                    <TableRow key={todo.id}>
-                                        <TableCell>{todo.descricao}</TableCell>
-                                        <TableCell>{todo.categoria}</TableCell>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Descrição</TableCell>
+                                        <TableCell>Categoria</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.todos.map(todo => (
+                                        <TableRow key={todo.id}>
+                                            <TableCell>{todo.descricao}</TableCell>
+                                            <TableCell>{todo.categoria}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
                         </Table>
+
                     </Grid>
                 </Grid>
             </>
