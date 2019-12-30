@@ -43,8 +43,8 @@ const Topbar = props => {
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
-              badgeContent={notifications.length}
-              color="primary"
+              badgeContent={4}
+              color="secondary"
               variant="dot"
             >
               <NotificationsIcon />
