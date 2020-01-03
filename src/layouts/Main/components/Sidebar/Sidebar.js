@@ -52,6 +52,11 @@ const Sidebar = props => {
       title: 'Tarefas',
       href: '/users',
       icon: <PeopleIcon />
+    },
+    {
+      title: 'Login',
+      href: '/sign-in',
+      icon: <PeopleIcon />
     }
   ];
 

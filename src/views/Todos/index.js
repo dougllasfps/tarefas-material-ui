@@ -13,28 +13,47 @@ import {
     Button,
     Grid,
     Paper,
+    FormControl,
+    Box,
+    Typography
+
 } from '@material-ui/core'
 
 
 const client = axios.create({
     baseURL: 'https://minhastarefas-api.herokuapp.com',
-    headers: {'x-tenant-id': 'dougllasfps@gmail.com'}
+    headers: {'x-tenant-id': localStorage.getItem('_user.mail')}
 })
 
 const useStyles = makeStyles(theme => ({
-    root: {
-      padding: theme.spacing(3)
+    root: {},
+    row: {
+      height: '42px',
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: theme.spacing(1)
     },
-    content: {
-      marginTop: theme.spacing(2)
+    spacer: {
+      flexGrow: 1
+    },
+    importButton: {
+      marginRight: theme.spacing(1)
+    },
+    exportButton: {
+      marginRight: theme.spacing(1)
+    },
+    searchInput: {
+      marginRight: theme.spacing(1)
     }
   }));
+
 
 class Todos extends React.Component{
 
     state = {
         todos : [],
         descricao: '',
+        invalid: true
     }
 
     componentDidMount(){
@@ -60,21 +79,28 @@ class Todos extends React.Component{
     }
 
     render(){
+
+        
         return (
             <>
-                <Grid container className={useStyles.root}>
-                    <Grid item md={10}>
-                        <Paper elevation={3}>
-                            <TextField value={this.state.descricao} style={{width: '100%'}}
-                                        onChange={e => this.setState({descricao: e.target.value})} />
-                        </Paper>
-                    </Grid>
-                    <Grid item md={2}>
-                        <Button variant="contained" color="primary" onClick={this.adicionar}>Adicionar</Button>
-                    </Grid>
+            <Typography variant="h1">Tarefas</Typography>
+            <Grid container spacing={4} component={Paper}>
+                <Grid item>
+                    <FormControl>
+                        <TextField value={this.state.descricao} 
+                                fullWidth={true} 
+                                label="Descrição"
+                                onChange={e => this.setState({descricao: e.target.value})} />
+                    </FormControl>
                 </Grid>
+                <Grid item md={2}>
+                    <Button disabled={this.state.invalid} variant="contained" color="primary" onClick={this.adicionar}>Adicionar</Button>
+                </Grid>
+            </Grid>
+            <Paper>
                 <Grid container className={useStyles.content}>
                     <Grid item  md={12}>
+                        <Paper>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -91,9 +117,11 @@ class Todos extends React.Component{
                                     ))}
                                 </TableBody>
                         </Table>
+                        </Paper>
 
                     </Grid>
                 </Grid>
+            </Paper>
             </>
         )
     }

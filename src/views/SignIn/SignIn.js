@@ -13,8 +13,6 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
-
 const schema = {
   email: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -158,19 +156,21 @@ const SignIn = props => {
       ...formState,
       values: {
         ...formState.values,
-        [event.target.name]:
-          event.target.type === 'checkbox'
-            ? event.target.checked
-            : event.target.value
+        [event.target.name]: event.target.value
       },
       touched: {
         ...formState.touched,
         [event.target.name]: true
       }
     }));
+
+    if(formState.values.email){
+      setFormState({...formState, isValid: true})
+    }
   };
 
   const handleSignIn = event => {
+    localStorage.setItem('_user.mail', formState.values.email)
     event.preventDefault();
     history.push('/');
   };
@@ -236,41 +236,9 @@ const SignIn = props => {
                   className={classes.title}
                   variant="h2"
                 >
-                  Sign in
+                  Login
                 </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
-                </Typography>
-                <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
+                
                 <Typography
                   align="center"
                   className={classes.sugestion}
@@ -293,24 +261,10 @@ const SignIn = props => {
                   value={formState.values.email || ''}
                   variant="outlined"
                 />
-                <TextField
-                  className={classes.textField}
-                  error={hasError('password')}
-                  fullWidth
-                  helperText={
-                    hasError('password') ? formState.errors.password[0] : null
-                  }
-                  label="Password"
-                  name="password"
-                  onChange={handleChange}
-                  type="password"
-                  value={formState.values.password || ''}
-                  variant="outlined"
-                />
+               
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid}
                   fullWidth
                   size="large"
                   type="submit"
